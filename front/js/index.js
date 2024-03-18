@@ -1,102 +1,51 @@
-    // Retrieve all products
-    let allData = []
-    let urlToParse = "http://localhost:3000/api/products/"
+// Déclaration d'une variable pour stocker les données récupérées
+let allData = []
+// URL à partir de laquelle récupérer les produits
+let urlToParse = "http://localhost:3000/api/products/"
 
-    // Faire une func init pour les appels
-
-   /* function init() {
-        // On fait les appels ici
+// Fonction asynchrone pour récupérer les données à partir de l'URL spécifiée
+async function fetchData(dataSet) {
+    try {
+        const response = await fetch(dataSet)
+        // Vérifier si la réponse est valide
+        if (!response.ok) {
+            throw new Error('Network response was not ok')
+        }
+        // Convertir la réponse en JSON et stocker les données
         allData = await response.json()
+        // Appeler la fonction pour traiter les données
         processData()
-        fetchData(urlToParse)
-    }*/
+    } catch (error) {
+        console.error('Error fetching data', error)
+        throw error
+    }
+}
 
-    async function fetchData(dataSet) {
+// Appeler la fonction pour récupérer les données
+fetchData(urlToParse)
+
+// Afficher les données récupérées (attention : les données peuvent ne pas être disponibles immédiatement)
+console.log(allData)
+
+// Fonction pour traiter les données récupérées et les afficher dans le DOM
+async function processData() {
+    for (const item of allData) {
         try {
-            const response = await fetch(dataSet)
-            if(!response.ok){
-                throw new Error('Network response was not ok')
-            }
-            allData = await response.json()
-            processData()
-            //allData.append(data)
-            // console.log(allData)
+            // Générer le HTML pour chaque produit
+            const article = `<article>
+                                <img src="${item.image}" alt="${item.titre}">
+                                <a href="product.html?id=${item._id}">Buy ${item.shorttitle}</a>
+                            </article>`
+            /*for(const element of allData[declinaisons]){
+
+                element.taille element.prix
+
+            }*/
+            // Insérer le HTML généré dans le DOM
+            document.querySelector(".products").insertAdjacentHTML("beforeend", article)
         } catch (error) {
-            console.error('Error fetching data', error)
-            throw error
+            console.log("Error processing data:", error)
         }
     }
-
-    fetchData(urlToParse)
-    console.log(allData)
-    /* data = fetchData(urlToParse)
-    console.log(data) */
-
-    // getMalerei(data)
-    // getMalerei
-
-    /*
-    _id
-        shorttitle
-        titre
-        description
-        image
-        declinaisons
-    */
-
-    /*
-    _id: string
-    shorttitle: string // titre court
-    titre: string // titre
-    description: string // texte
-    image: string
-    declinaisons: [objets{taille: string, prix: float/double}]
-    */
-
-
-    function buildEndpoint(id) {
-        let pathBase = "product.html?id="+id // ?get sur le front, pas vers le serveur // "http://localhost:3000/api/products/"+id
-        console.log("pathBase est:", pathBase)
-        return pathBase    
-    }
-
-    // Retrieve 
-    async function processData() {
-        for(const item of allData){
-            try {
-                const article = `<article>
-                                    <img src="${item.image}" alt="${item.titre}">
-                                    <a href="product.html?id=${item._id}">Buy ${item.shorttitle}</a>
-                                </article>`
-                document.querySelector(".products").insertAdjacentHTML("beforeend", article)            
-                /* let retrievePic = document.querySelector("#product-image")
-                let retrieveButton = document.querySelector("#product-button")
-                
-                console.log(retrievePic, retrieveButton)
-                retrievePic.src = item.image
-                console.log(item.image)
-                retrieveButton.innerHTML = buildEndpoint(item._id)
-                console.log(item._id) */
-                // bouton avec func
-            } catch (error) {
-                console.log("Error processing data:", error)
-            }
-        }      
-    }
-
-
-    // Retrieve ID from URL
-    
-    let url = new URL(urlString)
-    let idFromQuery;
-
-    function retrieveIdFromQuery(url) {
-        idFromQuery = url.searchParams.get("id")
-        return idFromQuery
-    } 
-
-   for(const declinaison in allData.declinaisons)  {
-    
-   }
-  // sd
+}
 
