@@ -1,9 +1,21 @@
 function init(){
     buildEndpoint()
     retrieveIdFromQuery()
+    displayRow(url)
+    console.log(displayRow)
+    fetchData(urlToParse)
 }
 /*
 ALGO
+
+/ Faire le call api
+/ Faire la boucle pour sortir les données clés valeurs
+/ Passer à l'affichage
+/ Compute func 
+
+/Récup l'id
+/JSON localstorage SNA le prix et pour le cart codage/décodage
+----------
 
 - on passe l'id
 - l'id sert à afficher les valeurs dans la data (écrire et controler au console.log)
@@ -18,7 +30,7 @@ ALGO
 
 // Ici pour les product
 let getData = []
-let urlToParse = ""
+let urlToParse = retrieveIdFromQuery() // fucn
 // Fonction asynchrone pour récupérer les données à partir de l'URL spécifiée
 async function fetchData(dataSet) {
     try {
@@ -38,14 +50,15 @@ async function fetchData(dataSet) {
 }
 
 // Fonction pour construire l'URL d'un produit à partir de son ID
-function buildEndpoint(id) {
+/* function buildEndpoint(id) {
     let pathBase = "product.html?id=" + id
     console.log("pathBase est:", pathBase)
     return pathBase
-}
+}*/
 
 // Fonction pour extraire l'ID à partir de l'URL de la requête
-function retrieveIdFromQuery(url) {
+function retrieveIdFromQuery() {
+    url = window.location.href
     idFromQuery = url.get("id")
     return idFromQuery
 } 
@@ -73,5 +86,4 @@ function displayRow(rowUrl) {
 }
 
 // Appeler la fonction pour afficher les détails du produit spécifié dans l'URL
-displayRow(url)
-console.log(displayRow)
+
